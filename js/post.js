@@ -1,22 +1,12 @@
 "use strict";
 (function() {
 
-   function newPost() {
-
-     newPost.prototype.form = document.querySelector("#add-post");
-   }
 
    function Post(data) {
      this._data = data;
 
      Post.prototype.template = document.querySelector('#post-template');
 
-     this._onPostClick = function(e) {
-       e.preventDefault();
-       if(typeof this.onClick === 'function') {
-         this.onClick();
-       }
-     }.bind(this);
 
    }
 
@@ -37,7 +27,7 @@
      }
 
      var postLoadTimeout = setTimeout(showLoadingError, POST_TIMEOUT);
-     
+
 
    }
 

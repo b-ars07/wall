@@ -5,7 +5,8 @@
   <link rel="stylesheet" href="css/styles.css">
   <meta charset="utf-8">
   <title>Стена</title>
-  <script defer src = "js/post.js"></script>
+  <script defer src = "data/post.js"></script>
+  <script defer src = "js/main-posts.js"></script>
 </head>
 <body>
 
@@ -36,15 +37,17 @@
 <div class="posts"></div>
 
 <template id="post-template">
-    <div class="post-content">
-      <h5 class="post-author">Автор поста: <br /><span></span></h5>
-      <div class="post-date"><br />Дата/время поста: <br /> <span></span></div>
-      <div class="wall-text"></div>
-      <div class="post-full-like">
-        <div class="post-likes"></div>
-        <div class="post-share"></div>
-      </div>
+  <div class="post-content">
+    <h5 class="post-author">Автор поста: <br /><span class="post-author"></span></h5>
+    <div class="post-date"><br />Дата/время поста: <br /> <span class="post-date"></span></div>
+    <div class="lol">
+      <div class="post-text"></div>
     </div>
+    <div class="post-full-like">
+      <div class="post-likes"></div>
+      <div class="post-share"></div>
+    </div>
+  </div>
 </template>
 
     <div class="loading bar hidden">
