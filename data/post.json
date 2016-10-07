@@ -1,33 +1,40 @@
-var posts = [{
+[{
   "author": "kokora",
   "likes": 40,
   "reposts": 12,
-  "date": "2015-09-17"
+  "date": "2015-09-17",
+  "text": "kokokokokokokokokokokokokokokokokokokokokokokokokokokokokokkokokokokokokokokokokokokokokokokokokookokkokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokkokokokokokokokokokokokokokokokokokokookokkokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokkokokokokokokokokokokokokokokokokokokookokkokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokkokokokokokokokokokokokokokokokokokokookokkokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokkokokokokokokokokokokokokokokokokokokookokkokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokkokokokokokokokokokokokokokokokokokokookokkokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokkokokokokokokokokokokokokokokokokokokookokkokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokkokokokokokokokokokokokokokokokokokokookokkokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokkokokokokokokokokokokokokokokokokokokookokkokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokkokokokokokokokokokokokokokokokokokokookokkokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokokoko"
 }, {
   "author": "mamaiy",
   "likes": 125,
   "reposts": 49,
-  "date": "2015-08-13"
+  "date": "2015-08-13",
+  "text": "mamamamamamamamamamamamamamamamamamamamamamamamam\nmamamamamamamamamamamamamaamamamamamamamamamamam\nmamamamamamamamamamaamamamamamama"
 }, {
   "author": "santa",
   "likes": 350,
   "reposts": 20,
-  "date": "2015-07-15"
+  "date": "2015-07-15",
+  "text": "This is some text...This is some text...This is some text..."
 }, {
   "author": "grizly",
   "likes": 61,
   "reposts": 0,
-  "date": "2015-09-16"
+  "date": "2015-09-16",
+  "text": "This is some text...This is some text...This is some text..."
 }, {
   "author": "avert",
   "likes": 100,
   "reposts": 18,
-  "date": "2015-05-25"
+  "date": "2015-05-25",
+  "text": "This is some text...This is some text...This is some text..."
 }, {
   "author": "mamaiy",
   "likes": 88,
   "reposts": 56,
-  "date": "2015-06-18"
+  "date": "2015-06-18",
+  "text": "...."
+
 }, {
   "author": "santa",
   "likes": 328,
