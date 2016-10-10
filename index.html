@@ -1,66 +1,68 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Open+Sans&subset=latin,cyrillic" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Open+Sans&subset=latin,cyrillic"
+        rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="css/styles.css">
   <meta charset="utf-8">
   <title>Стена</title>
 
-  <script defer src = "js/main-posts.js"></script>
+  <script defer src="js/main-posts.js"></script>
 </head>
 <body>
 
-  <div class="wall-posts-all" id="page-wall-posts">
+<div class="wall-posts-all" id="page-wall-posts">
 
-    <form class="filters" action="index.html" method="get">
-      <input type="radio" id="filter-all" class="filters-radio" name="filter" value="my" checked>
-      <label for="filter-all" class="filters-item">Все записи</label>
+  <form class="filters" action="index.html" method="get">
+    <input type="radio" id="filter-all" class="filters-radio" name="filter" value="my" checked>
+    <label for="filter-all" class="filters-item">Все записи</label>
 
-      <input type="radio" id="filter-my" class="filters-radio" name="filter" value="all">
-      <label for="filter-my" class="filters-item">Мои записи</label>
-    </form>
+    <input type="radio" id="filter-my" class="filters-radio" name="filter" value="all">
+    <label for="filter-my" class="filters-item">Мои записи</label>
+  </form>
 
-    <form id="add-post" class="add-post" name = "add_post" action="index.html" method="post" onsubmit="return validate()">
-      <div id="submit-post-box" class="submit-post-box">
-        <div class="post-field-user"></div>
-        <div id="post-field" class="submit-post-field">
-          <textarea name="text_post" rows="8" style = "width: 710px" placeholder="Ваше сообщение" ></textarea>
-          <span style="color:red" id="text"></span>
-        </div>
-        <div class = "submit-post">
-          <div class="addpost-button-wrap">
-            <button class="addpost-button" id="send-post">Отправить</button>
-          </div>
+  <form id="add-post" class="add-post" name="add_post" action="index.html" method="post" onsubmit="return validate()">
+    <div id="submit-post-box" class="submit-post-box">
+      <div class="post-field-user"></div>
+      <div id="post-field" class="submit-post-field">
+        <textarea name="text_post" rows="8" style="width: 710px" placeholder="Ваше сообщение"></textarea>
+        <span style="color:red" id="text"></span>
+      </div>
+      <div class="submit-post">
+        <div class="addpost-button-wrap">
+          <button class="addpost-button" id="send-post">Отправить</button>
         </div>
       </div>
-    </form>
-
-<div class="posts"></div>
-
-<template id="post-template">
-  <div class="post-content">
-    <h5 class="post-author">Автор поста: <br /><span class="post-author"></span></h5>
-    <div class="post-date"><br />Дата/время поста: <br /> <span class="post-date"></span></div>
-    <div class="lol">
-      <div class="post-text"></div>
     </div>
-    <div class="post-full-like">
-      <div class="post-likes post-stat"></div>
-      <div class="post-share post-stat"></div>
+  </form>
+
+  <div class="posts"></div>
+
+  <template id="post-template">
+    <div class="post-content">
+      <h5 class="post-author">Автор поста: <br/><span class="post-author"></span></h5>
+      <div class="post-date"><br/>Дата/время поста: <br/> <span class="post-date"></span></div>
+      <div class="lol">
+        <div class="post-text"></div>
+      </div>
+      <div class="post-full-like">
+        <div class="post-likes post-stat"></div>
+        <div class="post-share post-stat"></div>
+      </div>
     </div>
+  </template>
+
+  <div class="loading bar hidden">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
   </div>
-</template>
-
-    <div class="loading bar hidden">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>
-  </div>
+</div>
+<footer></footer>
 </body>
 </html>

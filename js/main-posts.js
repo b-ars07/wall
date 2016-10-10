@@ -6,34 +6,89 @@
 (function() {
     var container = document.querySelector('.posts');
     var posts = [];
+    var filteredPosts = [];
     var activeFilter = 'filter-all';
     var slider = document.querySelector('.loading');
-    var filters = document.querySelectorAll('.filters');
-    for (var i = 0; i < filters.length; i++) {
-        filters[i].onclick = function (evt) {
-            var clickElementID = evt.target.id;
-            setActiveFilter(clickElementID);
-        }
-    }
-    slider.classList.remove('hidden');
-    setTimeout(getPosts, 2000);
+    var filters = document.querySelector('.filters');
+    var currentPage = 0;
+    var PAGE_SIZE = 2;
+    var SCROLL_TIMEOUT = 400;
 
-    function renderPosts(posts) {
-        container.innerHTML = '';
-        posts.forEach(function(post) {
-            var fragment = document.createDocumentFragment();
+    filters.addEventListener('click', function (evt) {
+        var clickedElement = evt.target;
+        if (clickedElement.classList.contains('filters-radio')) {
+            setActiveFilter(clickedElement.id);
+            addPageOnScroll();
+        }
+    });
+
+    var scrollTimeout;
+
+    /**
+     * обработчик события scroll
+     */
+    window.addEventListener('scroll', function() {
+        slider.classList.remove('hidden');
+        clearTimeout (scrollTimeout);
+        scrollTimeout = setTimeout(addPageOnScroll, SCROLL_TIMEOUT);
+
+    });
+
+    /**
+     * (адаптация для больших разрешений). */
+    window.addEventListener('load', addPageOnScroll);
+
+    function addPageOnScroll() {
+
+
+        //определяем положение футера относительно экрана
+        var footerCoordinates = document.querySelector('footer').getBoundingClientRect();
+
+        //определяем высоту экрана
+        var viewportSize = document.documentElement.offsetHeight;
+
+        //если смещение футера минус высота экрана меньше высоты футера,
+        //футер виден хотя бы частично
+        if (footerCoordinates.bottom <= viewportSize) {
+            slider.classList.add('hidden');
+            if (currentPage < Math.ceil(filteredPosts.length / PAGE_SIZE)) {
+                renderPosts( filteredPosts, ++currentPage);
+                slider.classList.add('hidden');
+            }
+        } else {
+            slider.classList.add('hidden');
+        }
+
+    }
+
+    slider.classList.remove('hidden');
+    getPosts();
+
+    function renderPosts(posts, pageNumber, replace) {
+        if (replace) {
+            container.innerHTML = '';
+        }
+
+        var fragment = document.createDocumentFragment();
+
+        var from = pageNumber * PAGE_SIZE;
+        var to = from + PAGE_SIZE;
+        var pagePost = posts.slice(from, to);
+
+        pagePost.forEach(function(post) {
             var element = getElementFromTemplate(post);
             fragment.appendChild(element);
-            container.appendChild(fragment);
         });
+        container.appendChild(fragment);
+
     }
 
-    function setActiveFilter(id) {
-        if (activeFilter === id) {
+    function setActiveFilter(id, force) {
+        if (activeFilter === id && !force) {
             return;
         }
 
-        var filteredPosts = posts.slice(0);
+        filteredPosts = posts.slice(0);
 
         switch (id) {
             case ('filter-my'):
@@ -43,24 +98,33 @@
                 break;
         }
 
-        renderPosts(filteredPosts);
+        currentPage = 0;
+        renderPosts(filteredPosts, currentPage, true);
+        activeFilter = id;
 
     }
 
     function getPosts() {
+        slider.classList.remove('hidden');
         var xhr = new XMLHttpRequest();
         xhr.open('GET', 'data/post.json');
         xhr.onload = function(evt) {
-            var rawData = evt.target.response;
-            var loadedPosts = JSON.parse(rawData);
-            posts = loadedPosts;
-
-            //отрисовка данных
-            renderPosts(loadedPosts);
+            if (evt.target.status <= 300) {
+                var rawData = evt.target.response;
+                var loadedPosts = JSON.parse(rawData);
+            }
+            updateLoadedPosts(loadedPosts);
         };
        xhr.send();
-        slider.classList.add('hidden');
     }
+
+    function updateLoadedPosts(loadedPosts) {
+        posts = loadedPosts;
+
+        //отрисовка данных
+        setActiveFilter(activeFilter, true);
+    }
+
     /**
      * @param {Object} data
      * @return {Element}
