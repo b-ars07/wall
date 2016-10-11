@@ -28,10 +28,9 @@
      * обработчик события scroll
      */
     window.addEventListener('scroll', function() {
-        slider.classList.remove('hidden');
+
         clearTimeout (scrollTimeout);
         scrollTimeout = setTimeout(addPageOnScroll, SCROLL_TIMEOUT);
-
     });
 
     /**
@@ -47,21 +46,16 @@
         //определяем высоту экрана
         var viewportSize = document.documentElement.offsetHeight;
 
-        //если смещение футера минус высота экрана меньше высоты футера,
         //футер виден хотя бы частично
         if (footerCoordinates.bottom <= viewportSize) {
-            slider.classList.add('hidden');
             if (currentPage < Math.ceil(filteredPosts.length / PAGE_SIZE)) {
                 renderPosts( filteredPosts, ++currentPage);
-                slider.classList.add('hidden');
             }
-        } else {
-            slider.classList.add('hidden');
         }
 
     }
 
-    slider.classList.remove('hidden');
+
     getPosts();
 
     function renderPosts(posts, pageNumber, replace) {
@@ -74,6 +68,9 @@
         var from = pageNumber * PAGE_SIZE;
         var to = from + PAGE_SIZE;
         var pagePost = posts.slice(from, to);
+        if (from > posts.length) {
+            slider.classList.add('hidden');
+        }
 
         pagePost.forEach(function(post) {
             var postElement = new Post(post);
@@ -83,6 +80,7 @@
         container.appendChild(fragment);
 
     }
+
 
     function setActiveFilter(id, force) {
         if (activeFilter === id && !force) {
@@ -106,7 +104,6 @@
     }
 
     function getPosts() {
-        slider.classList.remove('hidden');
         var xhr = new XMLHttpRequest();
         xhr.open('GET', 'data/post.json');
         xhr.onload = function(evt) {
@@ -117,6 +114,7 @@
             updateLoadedPosts(loadedPosts);
         };
        xhr.send();
+
     }
 
     function updateLoadedPosts(loadedPosts) {
