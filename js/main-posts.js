@@ -1,4 +1,4 @@
-/* global pictures: true */
+/* global Post: true */
 
 'use strict';
 
@@ -11,7 +11,7 @@
     var slider = document.querySelector('.loading');
     var filters = document.querySelector('.filters');
     var currentPage = 0;
-    var PAGE_SIZE = 2;
+    var PAGE_SIZE = 4;
     var SCROLL_TIMEOUT = 400;
 
     filters.addEventListener('click', function (evt) {
@@ -76,8 +76,9 @@
         var pagePost = posts.slice(from, to);
 
         pagePost.forEach(function(post) {
-            var element = getElementFromTemplate(post);
-            fragment.appendChild(element);
+            var postElement = new Post(post);
+            postElement.render();
+            fragment.appendChild(postElement.element);
         });
         container.appendChild(fragment);
 
@@ -125,30 +126,6 @@
         setActiveFilter(activeFilter, true);
     }
 
-    /**
-     * @param {Object} data
-     * @return {Element}
-     */
-    function getElementFromTemplate(data) {
-        var template = document.querySelector('#post-template');
-
-        //для поддержки IE
-        if('content' in template) {
-            var element = template.content.children[0].cloneNode(true);
-        } else {
-            var element = template.children[0].cloneNode(true);
-        }
-
-        element.querySelector('.post-author').textContent = data.author;
-        element.querySelector('.post-likes').textContent = data.likes;
-        element.querySelector('.post-share').textContent = data.reposts;
-        element.querySelector('.post-date').textContent = data.date;
-        element.querySelector('.post-text').textContent = data.text;
-
-
-
-        return element;
-    }
 
 })();
 
