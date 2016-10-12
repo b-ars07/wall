@@ -133,7 +133,6 @@ div {
 .post-content {
   width: 99.6%;
   height: 200px;
-  margin: auto;
   margin-top: 20px;
   position: relative;
   border: 2px solid #0960bb;
@@ -173,10 +172,8 @@ h5.post-author {
 .post-text {
     overflow: auto;
     position: absolute;
-    float: right;
     display: inline-block;
     width: 600px;
-    min-height: 50px;
     height: 80%;
     margin-top: -30px;
     margin-left: 120px;

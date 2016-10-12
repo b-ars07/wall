@@ -1,4 +1,3 @@
-/* global Post: true */
 
 'use strict';
 
@@ -13,6 +12,8 @@
     var currentPage = 0;
     var PAGE_SIZE = 4;
     var SCROLL_TIMEOUT = 400;
+    var divText = document.getElementById('divText');
+
 
     filters.addEventListener('click', function (evt) {
         var clickedElement = evt.target;
@@ -49,7 +50,7 @@
         //футер виден хотя бы частично
         if (footerCoordinates.bottom <= viewportSize) {
             if (currentPage < Math.ceil(filteredPosts.length / PAGE_SIZE)) {
-                renderPosts( filteredPosts, ++currentPage);
+                renderPosts(filteredPosts, ++currentPage);
             }
         }
 
@@ -58,6 +59,11 @@
 
     getPosts();
 
+    /**
+     * @param {Array <string>} posts
+     * @param {number} pageNumber
+     * @param {boolean} replace
+     */
     function renderPosts(posts, pageNumber, replace) {
         if (replace) {
             container.innerHTML = '';
@@ -67,26 +73,59 @@
 
         var from = pageNumber * PAGE_SIZE;
         var to = from + PAGE_SIZE;
-        var pagePost = posts.slice(from, to);
-        if (from > posts.length) {
+        console.log(posts.length);
+
+        if (posts.length === 1 ) {
+             var pagePost = posts;
+            var postElement = new Post(pagePost);
+            postElement.render();
+            fragment.appendChild(postElement.element);
+            container.appendChild(fragment);
+        } else {
+            slider.classList.remove('hidden');
+            var pagePost = posts.slice(from, to);
+            pagePost.forEach(function(post) {
+                var postElement = new Post(post);
+                postElement.render();
+                fragment.appendChild(postElement.element)
+            });
+            container.appendChild(fragment);
+        }
+        // var pagePost = posts.slice(from, to);
+
+        if (posts.length < from) {
             slider.classList.add('hidden');
         }
 
-        pagePost.forEach(function(post) {
-            var postElement = new Post(post);
-            postElement.render();
-            fragment.appendChild(postElement.element);
-        });
-        container.appendChild(fragment);
+
+
 
     }
+
+    var btnSubmit = document.querySelector('.addpost-button');
+
+    btnSubmit.addEventListener('click', function(evt) {
+        evt.preventDefault();
+        var text = document.forms['add_post']['text_post'].value;
+        if (text.length === 0) {
+            alert("Данное поле обязательно для заполнения");
+        } else {
+
+            var sendPost = new NewPost(text);
+            var addPost = [];
+            addPost.push(sendPost._data);
+            renderPosts(addPost, currentPage);
+
+        }
+
+    });
 
 
     function setActiveFilter(id, force) {
         if (activeFilter === id && !force) {
             return;
         }
-
+        slider.classList.remove('hidden');
         filteredPosts = posts.slice(0);
 
         switch (id) {
@@ -125,16 +164,18 @@
     }
 
 
+
+
 })();
 
-  function validate() {
-    var text = document.forms['add_post']['text_post'].value;
-    if (text.length === 0) {
-      document.getElementById("text").innerHTML = "Данное поле обязательно для заполнения";
-      return false;
-    }
-    return true;
-  }
+  // function validate() {
+  //   var text = document.forms['add_post']['text_post'].value;
+  //   if (text.length === 0) {
+  //     document.getElementById("text").innerHTML = "Данное поле обязательно для заполнения";
+  //     return false;
+  //   }
+  //   return true;
+  // }
 
 
 

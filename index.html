@@ -7,9 +7,11 @@
   <meta charset="utf-8">
   <title>Стена</title>
 
-  <script defer src="js/Wall.js"></script>
-  <script defer src="js/post.js"></script>
   <script defer src="js/newPost.js"></script>
+  <script defer src="js/post.js"></script>
+  <script defer src="js/Wall.js"></script>
+
+
 </head>
 <body>
 
@@ -23,11 +25,11 @@
     <label for="filter-my" class="filters-item">Мои записи</label>
   </form>
 
-  <form id="add-post" class="add-post" name="add_post" action="index.html" method="post" onsubmit="return validate()">
+  <form id="add-post" class="add-post" name="add_post" action="index.html" method="post">
     <div id="submit-post-box" class="submit-post-box">
       <div class="post-field-user"></div>
       <div id="post-field" class="submit-post-field">
-        <textarea name="text_post" rows="8" style="width: 710px" placeholder="Ваше сообщение"></textarea>
+        <textarea name="text_post" id = "divText" rows="8" style="width: 710px" placeholder="Ваше сообщение"></textarea>
         <span style="color:red" id="text"></span>
       </div>
       <div class="submit-post">
