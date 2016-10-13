@@ -13,7 +13,7 @@
     var PAGE_SIZE = 4;
     var SCROLL_TIMEOUT = 400;
     var divText = document.getElementById('divText');
-    var pageCount = 0;
+    var newPost;
 
 
     filters.addEventListener('click', function (evt) {
@@ -40,7 +40,6 @@
     window.addEventListener('load', addPageOnScroll);
 
     function addPageOnScroll() {
-
 
         //определяем положение футера относительно экрана
         var footerCoordinates = document.querySelector('footer').getBoundingClientRect();
@@ -83,9 +82,10 @@
             pagePost.forEach(function (post) {
                 var postElement = new Post(post);
                 postElement.render();
-                container.insertBefore(postElement.element, container.firstChild);
+                newPost = postElement.element;
+                container.insertBefore(newPost, container.firstChild);
             });
-            
+
         } else {
             slider.classList.remove('hidden');
             var pagePost = posts.slice(from, to);
@@ -105,6 +105,22 @@
 
     var btnSubmit = document.querySelector('.addpost-button');
 
+    /**
+     *
+     * @param text
+     * @returns {Array}
+     */
+    function getAddPost(text) {
+        var sendPost = new NewPost(text);
+        var addPost = [];
+        addPost.push(sendPost.getData());
+
+        return addPost;
+    }
+
+    /**
+     * Обработчик клика по кнопке "Отправить"
+     */
     btnSubmit.addEventListener('click', function(evt) {
         evt.preventDefault();
         var text = document.forms['add_post']['text_post'].value;
@@ -112,23 +128,26 @@
             alert("Данное поле обязательно для заполнения");
         } else {
 
-            var sendPost = new NewPost(text);
-            var addPost = [];
-            addPost.push(sendPost.getData());
+            var addPost = getAddPost(text);
             renderPosts(addPost, ++currentPage);
-            setTimeout("$('textarea').val('')", 1000);
+            $('textarea').val('');
         }
 
     });
 
 
-
+    /**
+     * Переключение между фильтрами
+     * @param id
+     * @param force
+     */
     function setActiveFilter(id, force) {
         if (activeFilter === id && !force) {
             return;
         }
         slider.classList.remove('hidden');
         filteredPosts = posts.slice(0);
+
 
         switch (id) {
             case ('filter-my'):
@@ -144,6 +163,9 @@
 
     }
 
+    /**
+     * Получение данных из JSON при помощи AJAX
+     */
     function getPosts() {
         var xhr = new XMLHttpRequest();
         xhr.open('GET', 'data/post.json');
@@ -151,7 +173,7 @@
             if (evt.target.status <= 300) {
                 var rawData = evt.target.response;
                 var loadedPosts = JSON.parse(rawData);
-                pageCount = loadedPosts.length;
+                //pageCount = loadedPosts.length;
             }
             updateLoadedPosts(loadedPosts);
         };
@@ -159,6 +181,10 @@
 
     }
 
+    /**
+     * Полученные данные устанавливаем для фильтра по умолчанию
+     * @param loadedPosts
+     */
     function updateLoadedPosts(loadedPosts) {
         posts = loadedPosts;
 
