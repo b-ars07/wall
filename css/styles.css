@@ -172,12 +172,12 @@ h5.post-author {
 .post-text {
     overflow: auto;
     position: absolute;
-    display: inline-block;
     width: 600px;
-    height: 80%;
-    margin-top: -30px;
-    margin-left: 120px;
-    margin-bottom: -60px;
+    height: 70%;
+    margin: auto;
+    float: left;
+    top: 20px;
+    left: 150px;
     padding: 5px;
     border: 1px solid #0960bb;
     word-wrap: break-word;
@@ -294,6 +294,13 @@ h5.post-author {
 	100%{ opacity:0;}
 }
 
+#pagination {
+    position: absolute;
+    margin: auto;
+    left: 45%;
+
+}
+
 footer {
     position: absolute;
     left: 0;
@@ -301,3 +308,4 @@ footer {
     width: 100%;
     height: 80px;
 }
+

@@ -24,8 +24,8 @@
 
     }
 
-    NewPost.prototype.submit = function() {
-
+    NewPost.prototype.getData = function() {
+        return this._data;
     };
 
     window.NewPost = NewPost;

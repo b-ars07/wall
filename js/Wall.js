@@ -13,6 +13,7 @@
     var PAGE_SIZE = 4;
     var SCROLL_TIMEOUT = 400;
     var divText = document.getElementById('divText');
+    var pageCount = 0;
 
 
     filters.addEventListener('click', function (evt) {
@@ -50,6 +51,7 @@
         //футер виден хотя бы частично
         if (footerCoordinates.bottom <= viewportSize) {
             if (currentPage < Math.ceil(filteredPosts.length / PAGE_SIZE)) {
+
                 renderPosts(filteredPosts, ++currentPage);
             }
         }
@@ -73,14 +75,17 @@
 
         var from = pageNumber * PAGE_SIZE;
         var to = from + PAGE_SIZE;
-        console.log(posts.length);
+
 
         if (posts.length === 1 ) {
-             var pagePost = posts;
-            var postElement = new Post(pagePost);
-            postElement.render();
-            fragment.appendChild(postElement.element);
-            container.appendChild(fragment);
+            slider.classList.remove('hidden');
+             var pagePost = posts.slice(0);
+            pagePost.forEach(function (post) {
+                var postElement = new Post(post);
+                postElement.render();
+                container.insertBefore(postElement.element, container.firstChild);
+            });
+            
         } else {
             slider.classList.remove('hidden');
             var pagePost = posts.slice(from, to);
@@ -91,13 +96,9 @@
             });
             container.appendChild(fragment);
         }
-        // var pagePost = posts.slice(from, to);
-
         if (posts.length < from) {
             slider.classList.add('hidden');
         }
-
-
 
 
     }
@@ -113,12 +114,13 @@
 
             var sendPost = new NewPost(text);
             var addPost = [];
-            addPost.push(sendPost._data);
-            renderPosts(addPost, currentPage);
-
+            addPost.push(sendPost.getData());
+            renderPosts(addPost, ++currentPage);
+            setTimeout("$('textarea').val('')", 1000);
         }
 
     });
+
 
 
     function setActiveFilter(id, force) {
@@ -149,6 +151,7 @@
             if (evt.target.status <= 300) {
                 var rawData = evt.target.response;
                 var loadedPosts = JSON.parse(rawData);
+                pageCount = loadedPosts.length;
             }
             updateLoadedPosts(loadedPosts);
         };
@@ -162,6 +165,7 @@
         //отрисовка данных
         setActiveFilter(activeFilter, true);
     }
+
 
 
 
