@@ -1,5 +1,6 @@
 html,
 body {
+    height: 100%;
   background: #edeef0;
   color: #000;
   margin: 0;
@@ -13,10 +14,6 @@ body {
   -moz-osx-font-smoothing: auto
 }
 
-html {
-  background: #186f7d;
-  height: 100%;
-}
 
 html.inline-element {
   background: rgba(0, 0, 0, 0.6);
@@ -294,11 +291,59 @@ h5.post-author {
 	100%{ opacity:0;}
 }
 
-#pagination {
+.all {
     position: absolute;
+    width: 300px;
     margin: auto;
-    left: 45%;
+    left: 600px;
+    background-color: #A7AF97;
+    color: #3f668c ;
+    height: 20px;
+    text-align: center;
+    padding: 5px;
+    cursor: pointer;
 
+}
+
+#updown {
+    height: 100%;
+    width: 50px;
+    color: green;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    cursor: pointer;
+
+}
+
+#updown:hover {
+    background-color: #DCE2E8;
+}
+
+#updown.up::before {
+    content: '▲';
+}
+
+#updown.down::before {
+    content: '▼';
+}
+
+#scrollup {
+    position: fixed; /* фиксированная позиция */
+    opacity: 0.8; /* прозрачность */
+    padding: 5px 5px 5px; /* отступы */
+    background: #aaa;
+    border-radius: 5px; /* скругление углов */
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    left: 10px; /* отступ слева */
+    top: 10px;
+    bottom: 10px; /* отступ снизу */
+    display: none; /* спрятать блок */
+    cursor: pointer;
+    width: 60px;
+    height: 100%;
+    background: url(../img/up.png) 10px top no-repeat;
 }
 
 footer {
@@ -306,6 +351,11 @@ footer {
     left: 0;
     bottom: 0;
     width: 100%;
-    height: 80px;
+    height: 50px;
 }
+
+
+
+
+
 

@@ -4,18 +4,18 @@
   <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Open+Sans&subset=latin,cyrillic"
         rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="css/styles.css">
-  <!--<link rel="stylesheet" href="css/styles_pagin.css">-->
+
 
   <meta charset="utf-8">
   <title>Стена</title>
 
 
   <script defer src="js/posts-main.js"></script>
-  <!--<script defer src="js/script.js"></script>-->
   <script defer src="js/post-data.js"></script>
   <script defer src="js/newPost.js"></script>
   <script defer src="js/post.js"></script>
   <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
 
 
 
@@ -49,9 +49,9 @@
 
   <div class="posts" id="main"></div>
 
+  <div class="all hidden"> Показать все</div>
+
   <template id="post-template">
-    <!--<ul id="holder">-->
-      <!--<li>-->
     <div class="post-content">
       <h5 class="post-author">Автор поста: <br/><span class="post-author"></span></h5>
       <div class="post-date"><br/>Дата/время поста: <br/> <span class="post-date"></span></div>
@@ -63,9 +63,11 @@
         <div class="post-share post-stat"></div>
       </div>
     </div>
-      <!--</li>-->
-    <!--</ul>-->
   </template>
+
+  <!--<div id="updown"></div>-->
+
+  <div id="scrollup"></div>
 
   <div class="loading bar">
     <div></div>
@@ -78,8 +80,6 @@
     <div></div>
   </div>
 </div>
-<div id="pagination"></div>
-<div id="compact-pagination" class="pagination"></div>
 <footer></footer>
 </body>
 </html>

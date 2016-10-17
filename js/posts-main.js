@@ -16,6 +16,9 @@
     var divText = document.getElementById('divText');
     var newPost;
     var newAddPost;
+    var allPost = document.querySelector('.all');
+    var flag = false;
+    var updownElem = document.getElementById('updown');
 
     function Wall() {
 
@@ -31,6 +34,23 @@
 
         var from = pageNumber * PAGE_SIZE;
         var to = from + PAGE_SIZE;
+
+        if (from == 4) {
+            flag = true;
+        }
+
+        while (flag) {
+            slider.classList.add('hidden');
+            allPost.classList.remove('hidden');
+            return;
+
+        }
+
+        allPost.addEventListener('click' , function (evt) {
+            allPost.classList.add('hidden');
+            flag = false;
+            addPageOnScroll();
+        });
 
 
 
@@ -58,7 +78,7 @@
         if (posts.length < from) {
             slider.classList.add( 'hidden' );
         }
-        addPageOnScroll();
+        //addPageOnScroll();
 
     };
 
@@ -86,11 +106,56 @@
 
     var wall = new Wall();
 
+    var pageYLabel = 0;
+
+    // updownElem.onclick = function() {
+    //     var pageY = window.pageYOffset || document.documentElement.scrollTop;
+    //
+    //     switch (this.className) {
+    //         case 'up':
+    //             pageYLabel = pageY;
+    //             window.scrollTo(0, 0);
+    //             this.className = 'down';
+    //             break;
+    //
+    //         case 'down':
+    //             window.scrollTo(0, pageYLabel);
+    //             this.className = 'up';
+    //     }
+    //
+    // };
+
+    var scrollUp = document.getElementById('scrollup'); // найти элемент
+
+    scrollUp.onmouseover = function() { // добавить прозрачность
+        scrollUp.style.opacity=0.3;
+        scrollUp.style.filter  = 'alpha(opacity=30)';
+    };
+
+    scrollUp.onmouseout = function() { //убрать прозрачность
+        scrollUp.style.opacity = 0.5;
+        scrollUp.style.filter  = 'alpha(opacity=50)';
+    };
+
+    scrollUp.onclick = function() { //обработка клика
+        window.scrollTo(0,0);
+    };
+
+// show button
+
+    window.onscroll = function () { // при скролле показывать и прятать блок
+        if ( window.pageYOffset > 0 ) {
+            scrollUp.style.display = 'block';
+        } else {
+            scrollUp.style.display = 'none';
+        }
+    };
+
     filters.addEventListener('click', function (evt) {
         var clickedElement = evt.target;
         if (clickedElement.classList.contains('filters-radio')) {
             setActiveFilter(clickedElement.id, true);
-            //addPageOnScroll();
+            addPageOnScroll();
         }
     });
 
@@ -100,6 +165,30 @@
      * обработчик события scroll
      */
     window.addEventListener('scroll', function() {
+
+        var pageY = window.pageYOffset || document.documentElement.scrollTop;
+        var innerHeight = document.documentElement.clientHeight;
+
+        switch (updownElem.className) {
+            case '':
+                if (pageY > innerHeight) {
+                    updownElem.className = 'up';
+                }
+                break;
+
+            case 'up':
+                if (pageY < innerHeight) {
+                    updownElem.className = '';
+                }
+                break;
+
+            case 'down':
+                if (pageY > innerHeight) {
+                    updownElem.className = 'up';
+                }
+                break;
+
+        }
 
         clearTimeout (scrollTimeout);
         scrollTimeout = setTimeout(addPageOnScroll, SCROLL_TIMEOUT);
