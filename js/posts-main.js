@@ -17,8 +17,12 @@
     var newPost;
     var newAddPost;
     var allPost = document.querySelector('.all');
-    var flag = false;
-    var updownElem = document.getElementById('updown');
+    var flag = true;
+    var wall = new Wall();
+    var scrollUp = document.getElementById('scrollup'); // найти элемент
+    var btnSubmit = document.querySelector('.addpost-button');
+    var scrollTimeout;
+
 
     function Wall() {
 
@@ -27,32 +31,12 @@
     Wall.prototype.renderPosts = function(posts, pageNumber, replace) {
         if (replace) {
             container.innerHTML = '';
-
         }
 
         var fragment = document.createDocumentFragment();
 
         var from = pageNumber * PAGE_SIZE;
         var to = from + PAGE_SIZE;
-
-        if (from == 4) {
-            flag = true;
-        }
-
-        while (flag) {
-            slider.classList.add('hidden');
-            allPost.classList.remove('hidden');
-            return;
-
-        }
-
-        allPost.addEventListener('click' , function (evt) {
-            allPost.classList.add('hidden');
-            flag = false;
-            addPageOnScroll();
-        });
-
-
 
         if (posts.length === 1) {
             slider.classList.remove( 'hidden' );
@@ -78,7 +62,7 @@
         if (posts.length < from) {
             slider.classList.add( 'hidden' );
         }
-        //addPageOnScroll();
+        addPageOnScroll();
 
     };
 
@@ -104,29 +88,6 @@
 
     window.Wall = Wall;
 
-    var wall = new Wall();
-
-    var pageYLabel = 0;
-
-    // updownElem.onclick = function() {
-    //     var pageY = window.pageYOffset || document.documentElement.scrollTop;
-    //
-    //     switch (this.className) {
-    //         case 'up':
-    //             pageYLabel = pageY;
-    //             window.scrollTo(0, 0);
-    //             this.className = 'down';
-    //             break;
-    //
-    //         case 'down':
-    //             window.scrollTo(0, pageYLabel);
-    //             this.className = 'up';
-    //     }
-    //
-    // };
-
-    var scrollUp = document.getElementById('scrollup'); // найти элемент
-
     scrollUp.onmouseover = function() { // добавить прозрачность
         scrollUp.style.opacity=0.3;
         scrollUp.style.filter  = 'alpha(opacity=30)';
@@ -138,18 +99,11 @@
     };
 
     scrollUp.onclick = function() { //обработка клика
-        window.scrollTo(0,0);
+        $('body,html').animate({ scrollTop: 0 }, 800);
     };
 
 // show button
 
-    window.onscroll = function () { // при скролле показывать и прятать блок
-        if ( window.pageYOffset > 0 ) {
-            scrollUp.style.display = 'block';
-        } else {
-            scrollUp.style.display = 'none';
-        }
-    };
 
     filters.addEventListener('click', function (evt) {
         var clickedElement = evt.target;
@@ -159,44 +113,23 @@
         }
     });
 
-    var scrollTimeout;
 
     /**
      * обработчик события scroll
      */
     window.addEventListener('scroll', function() {
-
-        var pageY = window.pageYOffset || document.documentElement.scrollTop;
-        var innerHeight = document.documentElement.clientHeight;
-
-        switch (updownElem.className) {
-            case '':
-                if (pageY > innerHeight) {
-                    updownElem.className = 'up';
-                }
-                break;
-
-            case 'up':
-                if (pageY < innerHeight) {
-                    updownElem.className = '';
-                }
-                break;
-
-            case 'down':
-                if (pageY > innerHeight) {
-                    updownElem.className = 'up';
-                }
-                break;
-
+        if ( window.pageYOffset > 0 ) {
+            scrollUp.style.display = 'block';
+        } else {
+            scrollUp.style.display = 'none';
         }
-
         clearTimeout (scrollTimeout);
         scrollTimeout = setTimeout(addPageOnScroll, SCROLL_TIMEOUT);
     });
 
     /**
      * (адаптация для больших разрешений). */
-    window.addEventListener('load', addPageOnScroll);
+  //  window.addEventListener('load', addPageOnScroll);
 
     function addPageOnScroll() {
 
@@ -207,9 +140,19 @@
         var viewportSize = document.documentElement.offsetHeight;
 
         //футер виден хотя бы частично
-        if (footerCoordinates.bottom <= viewportSize) {
+        if (footerCoordinates.top <= viewportSize) {
             if (currentPage < Math.ceil(filteredPosts.length / PAGE_SIZE)) {
+                while (flag) {
+                    slider.classList.add('hidden');
+                    allPost.classList.remove('hidden');
+                    allPost.addEventListener('click' , function (evt) {
+                        allPost.classList.add('hidden');
+                        flag = false;
+                        addPageOnScroll();
+                    });
+                    return;
 
+                }
                 wall.renderPosts(filteredPosts, ++currentPage, false);
             }
         }
@@ -217,8 +160,6 @@
     }
 
     wall.getPosts();
-
-    var btnSubmit = document.querySelector('.addpost-button');
 
     /**
      *
@@ -273,16 +214,16 @@
         }
 
         currentPage = 0;
+        allPost.classList.add('hidden');
         wall.renderPosts(filteredPosts, currentPage, true);
         activeFilter = id;
+        flag = true;
 
         //запись фильтра в localStorage
         localStorage.setItem('activeFilter', id);
         filters[activeFilter].checked = true;
 
     }
-
-
 
     /**
      * Полученные данные устанавливаем для фильтра по умолчанию
